@@ -1,4 +1,7 @@
-export type RegistrationErrorCode = "VALIDATION_ERROR" | "PERSISTENCE_ERROR";
+export type RegistrationErrorCode =
+  | "VALIDATION_ERROR"
+  | "SECURITY_ERROR"
+  | "PERSISTENCE_ERROR";
 
 export interface RegistrationError {
   code: RegistrationErrorCode;

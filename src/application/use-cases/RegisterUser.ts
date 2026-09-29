@@ -1,11 +1,21 @@
 import type { CreateUserData, User } from "../../domain/User";
 import type { UserRepository } from "../../domain/repositories/UserRepository";
+import type { PasswordHasher } from "../ports/PasswordHasher";
 import type { RegistrationResult } from "../RegistrationResult";
 
-export class RegisterUser {
-  constructor(private readonly userRepository: UserRepository) {}
+export interface RegisterUserInput {
+  name: string;
+  email: string;
+  password: string;
+}
 
-  async execute(input: CreateUserData): Promise<RegistrationResult<User>> {
+export class RegisterUser {
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly passwordHasher: PasswordHasher,
+  ) {}
+
+  async execute(input: RegisterUserInput): Promise<RegistrationResult<User>> {
     const name = input.name.trim();
     const email = input.email.trim();
     const fieldErrors: Record<string, string> = {};
@@ -15,6 +25,9 @@ export class RegisterUser {
       fieldErrors.email = "El correo es obligatorio.";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       fieldErrors.email = "Ingresa un correo válido.";
+    }
+    if (input.password.length < 8) {
+      fieldErrors.password = "La contraseña debe tener al menos 8 caracteres.";
     }
 
     if (Object.keys(fieldErrors).length > 0) {
@@ -28,8 +41,28 @@ export class RegisterUser {
       };
     }
 
+    let credential: Awaited<ReturnType<PasswordHasher["hash"]>>;
     try {
-      const user = await this.userRepository.saveUser({ name, email });
+      credential = await this.passwordHasher.hash(input.password);
+    } catch {
+      return {
+        success: false,
+        error: {
+          code: "SECURITY_ERROR",
+          message: "No fue posible proteger la contraseña para el registro.",
+        },
+      };
+    }
+
+    const userData: CreateUserData = {
+      name,
+      email,
+      passwordHash: credential.hash,
+      passwordSalt: credential.salt,
+    };
+
+    try {
+      const user = await this.userRepository.saveUser(userData);
       return { success: true, data: user };
     } catch {
       return {

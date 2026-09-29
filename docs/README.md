@@ -14,3 +14,4 @@ Esta carpeta reúne el análisis y las decisiones de diseño realizadas por fase
 8. [Infraestructura SQLite](fase-8-infraestructura-sqlite.md)
 9. [Repositorios](fase-9-repositorios.md)
 10. [Casos de uso](fase-10-casos-de-uso.md)
+11. [Registro de usuarios: UI](fase-11-registro-usuarios-ui.md)
