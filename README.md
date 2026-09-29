@@ -3,6 +3,7 @@
 **Programación Móvil · CORHUILA**
 
 > ### 🏆 Regla de oro
+>
 > Las buenas prácticas vistas hasta el momento en el curso **no son negociables**. Ya deben saberlas.
 
 ---
@@ -119,13 +120,13 @@ git commit -m "feat: create base application structure"
 
 ## Distribución sugerida del tiempo
 
-| Hora | Actividad |
-|---|---|
-| 7:00 – 7:10 | Análisis del problema y definición de estructura |
-| 7:10 – 7:25 | Creación de la estructura base y configuración de SQLite |
+| Hora        | Actividad                                                    |
+| ----------- | ------------------------------------------------------------ |
+| 7:00 – 7:10 | Análisis del problema y definición de estructura             |
+| 7:10 – 7:25 | Creación de la estructura base y configuración de SQLite     |
 | 7:25 – 7:45 | Implementación de registro de usuarios, personas y productos |
-| 7:45 – 8:00 | Integración, ejecución y corrección de errores |
-| 8:00 – 8:10 | Revisión final, commit y explicación de la solución |
+| 7:45 – 8:00 | Integración, ejecución y corrección de errores               |
+| 8:00 – 8:10 | Revisión final, commit y explicación de la solución          |
 
 ## Entregable
 
